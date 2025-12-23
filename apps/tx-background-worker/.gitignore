@@ -1,0 +1,11 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+node_modules
+/src/generated/prisma
+dist
+.env
+.env.local

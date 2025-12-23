@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TxStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model Transaction {
+  id               String   @id @default(uuid())
+  amount           BigInt
+  date             DateTime @default(now())
+  senderAddress    String   @map("sender_address")
+  recipientAddress String   @map("recipient_address")
+  signature        String?  @unique
+  error            String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  state            TxStatus @default(PENDING)
+
+  @@map("transactions")
+  @@index([senderAddress, recipientAddress])
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  address   String   @unique
+  balance   BigInt   @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("wallets")
+}

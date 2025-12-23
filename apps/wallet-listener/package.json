@@ -1,5 +1,5 @@
 {
-  "name": "sol-app",
+  "name": "wallet-listener",
   "version": "1.0.0",
   "description": "- Scenario: Build a small service that fetches user wallet data from a Solana RPC endpoint and stores it in a PostgreSQL database.",
   "scripts": {

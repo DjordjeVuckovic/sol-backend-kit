@@ -1,0 +1,24 @@
+### Create tx
+
+@sender = AyC4m8fYEgR9mYcf6zzajevPjF8QhptY9Nae5LX6xgiu
+@reciever = F4jZvnU9fdi2mGp13TyewdAj96cKGUcwBBSMTsL1nRoC
+@amount = 1
+
+POST {{BASE_URL}}/api/v1/transactions
+Content-Type: application/json
+
+{
+    "senderAddress": "{{sender}}",
+    "recipientAddress": "{{reciever}}",
+    "amount": {{amount}}
+}
+
+### Get tx by id
+@txId = 5cd6ad92-1408-43eb-8ff6-73fdc57fc3ff
+GET {{BASE_URL}}/api/v1/transactions/5cd6ad92-1408-43eb-8ff6-73fdc57fc3ff
+Content-Type: application/json
+
+
+### Get all txs
+GET {{BASE_URL}}/api/v1/transactions?offest=1&limit=10
+Content-Type: application/json
