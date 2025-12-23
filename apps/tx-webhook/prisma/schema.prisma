@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TxStatus {
+  MONITORING
+  CONFIRMED
+  FAILED
+  WEBHOOK_FAILED
+}
+
+model SingatureMonitoring {
+  id            Int       @id @default(autoincrement())
+  signature     String    @unique
+  isActive      Boolean   @default(true) @map("is_active")
+  webhookUrl    String    @map("webhook_url")
+  webhookSentAt DateTime? @map("webhook_sent_at")
+  status        TxStatus  @default(MONITORING)
+  retryCount    Int       @default(0) @map("retry_count")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("signature_monitoring")
+}

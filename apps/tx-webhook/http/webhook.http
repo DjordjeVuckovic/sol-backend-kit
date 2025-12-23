@@ -1,0 +1,8 @@
+### Submit a POST request to the webhook signature endpoint
+POST {{BASE_URL}}/api/v1/monitor
+Content-Type: application/json
+
+{
+  "signature": "{{$env.OSLogRateLimit}}",
+  "url": "http://localhost:3002/webhook"
+}

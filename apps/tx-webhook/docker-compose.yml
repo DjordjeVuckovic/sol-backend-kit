@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:17.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dev
+    volumes:
+      - tx_webhook_db_data:/var/lib/postgresql/data
+    ports:
+      - "54322:5432"
+  redis:
+    image: redis:8.2
+    ports:
+      - "6381:6379"
+volumes:
+    tx_webhook_db_data:
+
