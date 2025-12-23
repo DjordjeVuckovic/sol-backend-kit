@@ -1,0 +1,37 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Wallet {
+  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  solAddress String       @unique @map("sol_address")
+  signatures Signatures[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  @@map("wallet")
+}
+
+model Signatures {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  walletId  String  @map("wallet_id") @db.Uuid
+  wallet    Wallet  @relation(fields: [walletId], references: [id])
+  signature String @unique
+  slot      BigInt
+  blockTime BigInt?  @map("block_time")
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([signature])
+  @@map("signatures")
+}
