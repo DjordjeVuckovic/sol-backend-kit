@@ -5,6 +5,7 @@ export const envSchema = z.object({
     LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error', 'fatal']).optional().default('info'),
     NODE_ENV: z.enum(['development', 'production', 'test']).optional().default('development'),
     DATABASE_URL: z.url().default('postgresql://postgres:postgres@localhost:54321/dev?schema=public'),
+    REDIS_URL: z.string().optional().default('redis://localhost:6379'),
 })
 
 export const env = envSchema.parse(process.env)
