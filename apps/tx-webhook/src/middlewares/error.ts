@@ -1,6 +1,5 @@
 import type { NextFunction, Response, Request } from "express";
 import {createChildLogger, logger} from "../config/logger.js";
-import { HttpError } from "../shared/error.js";
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
     logger.error({

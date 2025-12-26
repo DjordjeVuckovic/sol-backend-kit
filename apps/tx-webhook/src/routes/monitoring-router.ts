@@ -1,10 +1,13 @@
-import express, {type Request, type Router} from "express";
+import express, {type Request, type Response, type Router} from "express";
 import {validateBody, validateParams} from "../middlewares/zod.js";
 import {type CreateTxWebhook, CreateTxWebhookSchema} from "../types/webhook.js";
 import {prisma} from "../config/db.js";
 import {monitorQueue} from "../jobs/queue.js";
 import {logger} from "../config/logger.js";
-import {PrismaClientKnownRequestError} from "../generated/prisma/internal/prismaNamespace.js";
+import {
+    PrismaClientKnownRequestError,
+    type SingatureMonitoringModel
+} from "../generated/prisma/internal/prismaNamespace.js";
 import {HttpError} from "../shared/error.js";
 import {z} from "zod";
 
@@ -12,7 +15,7 @@ const router: Router = express.Router();
 
 router.post('/v1/monitor',
     validateBody(CreateTxWebhookSchema),
-    async (req: Request<{}, {}, CreateTxWebhook>, res) => {
+    async (req: Request<{}, {}, CreateTxWebhook>, res: Response<SingatureMonitoringModel>) => {
         const reqBody = req.body;
         const result = await monitorHandler(reqBody);
         return res.status(201).json(result);
